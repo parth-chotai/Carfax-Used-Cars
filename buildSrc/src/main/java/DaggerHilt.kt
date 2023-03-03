@@ -1,0 +1,15 @@
+object DaggerHilt {
+    const val daggerHiltVersion = "2.43.1"
+    const val daggerHilt =
+        "com.google.dagger:hilt-android:$daggerHiltVersion"
+
+    const val kaptDaggerHiltCompiler =
+        "com.google.dagger:hilt-android-compiler:$daggerHiltVersion"
+
+    private const val hiltNavigationVersion = "1.0.0"
+    const val hiltNavigation =
+        "androidx.hilt:hilt-navigation-compose:$hiltNavigationVersion"
+
+    private const val kaptHiltCompilerVersion = "1.0.0"
+    const val kaptHiltCompiler = "androidx.hilt:hilt-compiler:$kaptHiltCompilerVersion"
+}

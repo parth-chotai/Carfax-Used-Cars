@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Carfax Used Cars"
-include ':app'
+include(":app")
