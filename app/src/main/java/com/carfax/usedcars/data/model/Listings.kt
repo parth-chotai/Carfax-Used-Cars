@@ -1,6 +1,7 @@
 package com.carfax.usedcars.data.model
 
 import com.google.gson.annotations.SerializedName
+import java.math.BigInteger
 
 
 data class Listings(
@@ -66,7 +67,7 @@ data class Listings(
     var followCount: Int? = null,
 
     @SerializedName("followedAt")
-    var followedAt: Int? = null,
+    var followedAt: BigInteger? = null,
 
     @SerializedName("following")
     var following: Boolean? = null,
