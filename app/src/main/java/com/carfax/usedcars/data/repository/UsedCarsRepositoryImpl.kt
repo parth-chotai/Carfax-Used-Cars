@@ -11,11 +11,18 @@ class UsedCarsRepositoryImpl @Inject constructor(
 ) : IUsedCarsRepository {
 
     override suspend fun getUsedCarsData(): NetworkResult<UsedCars> {
-        val response = try {
-            iCarfaxApiService.getUsedCarsData()
-        } catch (ex: Exception) {
-            return NetworkResult.Error(ex)
+        try {
+            val response = iCarfaxApiService.getUsedCarsData()
+            if (response.isSuccessful) {
+                val body = response.body()
+                body?.let { return NetworkResult.Success(it) }
+            }
+            return error("${response.code()} ${response.message()}")
+        } catch (e: Exception) {
+            return error(e.message ?: e.toString())
         }
-        return NetworkResult.Success(response)
     }
+
+    private fun error(errorMessage: String): NetworkResult.Error =
+        NetworkResult.Error("Api call failed $errorMessage")
 }

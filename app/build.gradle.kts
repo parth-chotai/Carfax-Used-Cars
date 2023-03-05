@@ -80,6 +80,13 @@ dependencies {
     androidTestImplementation(Junit.junitExt)
     implementation(Compose.navigation)
 
+    // Coil
+    implementation(Coil.coil)
+    implementation(Coil.coilGif)
+
+    // Accompanist
+    implementation(Accompanist.animations)
+
     // Debug profiling
     implementation(Compose.ui_tooling)
     debugImplementation(Compose.ui_tooling_preview)

@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Carfax Used Cars</string>
+    <string name="carfax">CARFAX</string>
+    <string name="call_dealer">CALL DEALER</string>
+    <string name="vehicle_info">Vehicle Info</string>
+
+    <!--Format Strings-->
+    <string name="year_make_model_trim">%1$d %2$s %3$s %4$s</string>
+    <string name="price_mileage">$ %1$s │ %2$s mi</string>
+    <string name="city_state">%1$s, %2$s</string>
+    <string name="location">Location</string>
+    <string name="exterior_color">Exterior Color</string>
+    <string name="interior_color">Interior Color</string>
+    <string name="drive_type">Drive Type</string>
+    <string name="transmission">Transmission</string>
+    <string name="body_style">Body Style</string>
+    <string name="engine">Engine</string>
+    <string name="fuel">Fuel</string>
+
 </resources>
