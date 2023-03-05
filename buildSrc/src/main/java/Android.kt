@@ -1,6 +1,6 @@
 object Android {
     const val appId = "com.carfax.usedcars"
-    const val compileSdk = 32
+    const val compileSdk = 33
     const val buildTools = "30.0.3"
     const val minSdk = 23
     const val targetSdk = 32

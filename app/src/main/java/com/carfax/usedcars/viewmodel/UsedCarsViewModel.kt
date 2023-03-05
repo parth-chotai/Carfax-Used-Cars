@@ -19,16 +19,19 @@ class UsedCarsViewModel @Inject constructor(
     private val iUsedCarsRepository: IUsedCarsRepository,
 ) : ViewModel() {
 
+    //region Variables
     var usedCarsState by mutableStateOf<NetworkResult<UsedCars>>(value = NetworkResult.Loading)
         private set
 
     var car: Listings? = null
         private set
+    //endregion
 
     init {
         getUsedCarsData()
     }
 
+    //region Functions
     private fun getUsedCarsData() {
         viewModelScope.launch(Dispatchers.IO) {
             when (val networkResult = iUsedCarsRepository.getUsedCarsData()) {
@@ -46,4 +49,5 @@ class UsedCarsViewModel @Inject constructor(
     fun saveClickedCar(clickedCar: Listings) {
         car = clickedCar
     }
+    //endregion
 }

@@ -16,6 +16,8 @@ fun Navigation(
     cars: List<Listings>,
     viewModel: UsedCarsViewModel,
 ) {
+    // todo: wanted to use navigation animations, hence the AnimatedNavController
+    //  but couldn't implement it due to time constraints but a thing for future maybe
     val navController = rememberAnimatedNavController()
 
     AnimatedNavHost(

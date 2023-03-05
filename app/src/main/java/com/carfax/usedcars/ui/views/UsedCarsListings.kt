@@ -1,5 +1,11 @@
 package com.carfax.usedcars.ui.views
 
+import android.Manifest
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -7,11 +13,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Divider
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,13 +32,19 @@ import com.carfax.usedcars.R
 import com.carfax.usedcars.data.model.Listings
 import com.carfax.usedcars.extensions.callDealer
 import com.carfax.usedcars.extensions.numberTruncation
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.PermissionStatus
+import com.google.accompanist.permissions.rememberPermissionState
+import com.google.accompanist.permissions.shouldShowRationale
+import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 
 
-@OptIn(ExperimentalCoilApi::class)
+@OptIn(ExperimentalCoilApi::class, ExperimentalPermissionsApi::class)
 @Composable
 fun Car(
     car: Listings,
+    scaffoldState: ScaffoldState,
     navigate: (car: Listings) -> Unit,
 ) {
     val painter = rememberImagePainter(
@@ -54,6 +64,15 @@ fun Car(
     val state = car.dealer?.state!!
     val phone = car.dealer?.phone!!
     val context = LocalContext.current
+    val permissionState = rememberPermissionState(Manifest.permission.CALL_PHONE)
+    val launcher =
+        rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { wasGranted ->
+            if (wasGranted) {
+                phone.callDealer(context)
+            }
+        }
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = scaffoldState.snackbarHostState
 
     Card(
         elevation = 4.dp,
@@ -114,7 +133,33 @@ fun Car(
                     .fillMaxWidth()
                     .padding(16.dp)
                     .clickable {
-                        phone.callDealer(context)
+                        //region Permissions
+                        when (permissionState.status) {
+                            PermissionStatus.Granted -> {
+                                phone.callDealer(context)
+                            }
+                            else -> {
+                                if (permissionState.status.shouldShowRationale) {
+                                    scope.launch {
+                                        val result =
+                                            snackbarHostState.showSnackbar(
+                                                message = context.getString(R.string.permission_required),
+                                                actionLabel = context.getString(R.string.go_to_settings)
+                                            )
+                                        if (result == SnackbarResult.ActionPerformed) {
+                                            val intent = Intent(
+                                                Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                                Uri.fromParts("package", context.packageName, null)
+                                            )
+                                            context.startActivity(intent)
+                                        }
+                                    }
+                                } else {
+                                    launcher.launch(Manifest.permission.CALL_PHONE)
+                                }
+                            }
+                        }
+                        //endregion
                     }
             )
         }
@@ -126,34 +171,40 @@ fun UsedCarsListings(
     cars: List<Listings>,
     navigate: (car: Listings) -> Unit,
 ) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFf5f5f5))
-    ) {
+    val scaffoldState = rememberScaffoldState()
+    Scaffold(scaffoldState = scaffoldState) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color(0xFF3777bc)),
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = stringResource(R.string.carfax),
-                color = Color.White,
-                textAlign = TextAlign.Left,
-                fontWeight = FontWeight.Medium,
-                modifier = Modifier.padding(start = 40.dp, top = 24.dp, bottom = 24.dp)
-            )
-        }
-        LazyColumn(
-            contentPadding = PaddingValues(top = 24.dp, start = 4.dp, end = 4.dp, bottom = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(24.dp),
-            modifier = Modifier.weight(1f, fill = false)
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color(0xFFf5f5f5))
         ) {
-            items(cars) { car ->
-                Car(car, navigate)
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color(0xFF3777bc)),
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = stringResource(R.string.carfax),
+                    color = Color.White,
+                    textAlign = TextAlign.Left,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(start = 40.dp, top = 24.dp, bottom = 24.dp)
+                )
+            }
+            LazyColumn(
+                contentPadding = PaddingValues(top = 24.dp,
+                    start = 4.dp,
+                    end = 4.dp,
+                    bottom = 24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(24.dp),
+                modifier = Modifier.weight(1f, fill = false)
+            ) {
+                items(cars) { car ->
+                    Car(car, scaffoldState, navigate)
+                }
             }
         }
     }

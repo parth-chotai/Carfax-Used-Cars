@@ -86,6 +86,7 @@ dependencies {
 
     // Accompanist
     implementation(Accompanist.animations)
+    implementation(Accompanist.permissions)
 
     // Debug profiling
     implementation(Compose.ui_tooling)
