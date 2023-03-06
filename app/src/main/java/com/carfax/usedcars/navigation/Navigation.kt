@@ -22,17 +22,17 @@ fun Navigation(
 
     AnimatedNavHost(
         navController,
-        startDestination = "used-cars",
-        route = "root-toute"
+        startDestination = Routes.usedCarsListingRouteId,
+        route = Routes.rootRouteId
     ) {
-        composable(route = "used-cars") {
+        composable(route = Routes.usedCarsListingRouteId) {
             UsedCarsListings(cars = cars) {
                 viewModel.saveClickedCar(it)
                 navController.navigate("car-details")
             }
         }
 
-        composable(route = "car-details") {
+        composable(route = Routes.carDetailsRouteId) {
             viewModel.car?.let {
                 CarDetailsScreen(car = it) {
                     navController.popBackStack()
