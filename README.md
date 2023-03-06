@@ -1,8 +1,9 @@
 # Carfax-Used-Cars with Compose, Navigation, Coil, Permissions, Hilt, Retrofit, Coroutines using MVVM Architecture
 
 ## About
-This is a demo application built using modern Jetpack tools that connects to used car listings backend in order
+- This is a demo application built using modern Jetpack tools that connects to used car listings backend in order
 to retrieve and display car listings data.
+- Works <b>OFFLINE</b>.
 
 ## Using
 - [Kotlin](https://kotlinlang.org/) - Official programming language for Android development.
