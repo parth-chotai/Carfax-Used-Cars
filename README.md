@@ -18,9 +18,13 @@ to retrieve and display car listings data.
 
 ## Screenshots
 
-Used Cars Listing            |  Car Details | Video Demo
-:-------------------------:|:-------------------------:|:-------------------------:|
-![1](https://user-images.githubusercontent.com/73533756/223163476-fbe5e797-acd4-4959-831a-b9bf759f8626.jpeg) | ![2](https://user-images.githubusercontent.com/73533756/223163508-1a7f129a-daf0-4e4b-89e8-065b453bdea2.jpeg) | https://user-images.githubusercontent.com/73533756/223171372-52763981-4019-4966-92ad-d5d79324fc97.mp4
+Used Cars Listing            |  Car Details
+:-------------------------:|:-------------------------:|
+![1](https://user-images.githubusercontent.com/73533756/223163476-fbe5e797-acd4-4959-831a-b9bf759f8626.jpeg) | ![2](https://user-images.githubusercontent.com/73533756/223163508-1a7f129a-daf0-4e4b-89e8-065b453bdea2.jpeg)
+
+<br/>
+
+<b>Video Demo:</b> https://user-images.githubusercontent.com/73533756/223171372-52763981-4019-4966-92ad-d5d79324fc97.mp4
 
 ## NOTE
 - You would need to request a secrets.properties file (and place it at a root level of the project) from Vivek Shah in order to build the project successfully.
