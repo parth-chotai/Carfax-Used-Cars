@@ -8,7 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.carfax.usedcars.data.model.Listings
 import com.carfax.usedcars.data.model.UsedCars
 import com.carfax.usedcars.data.repository.IUsedCarsRepository
+import com.carfax.usedcars.preferences.IPreferences
 import com.carfax.usedcars.util.NetworkResult
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class UsedCarsViewModel @Inject constructor(
     private val iUsedCarsRepository: IUsedCarsRepository,
+    private val iPreferences: IPreferences,
 ) : ViewModel() {
 
     //region Variables
@@ -39,6 +42,7 @@ class UsedCarsViewModel @Inject constructor(
                     usedCarsState = NetworkResult.Error(networkResult.message)
                 }
                 is NetworkResult.Success -> {
+                    iPreferences.usedCarsData = Gson().toJson(networkResult.data)
                     usedCarsState = NetworkResult.Success(networkResult.data)
                 }
                 else -> Unit
