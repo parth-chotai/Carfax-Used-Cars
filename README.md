@@ -30,5 +30,5 @@ Used Cars Listing            |  Car Details
 ## NOTE
 - You would need to request a secrets.properties file (and place it at a root level of the project) from Vivek Shah in order to build the project successfully.
 - There were some links for showing the images starting with "https://carfax..." which looked broken, so I ended up using a placeholder image for them.
-- I wanted to add animations such as Navigation Animations but looked like we were on a tight deadline to couldn't do it but just a FYI!
+- I wanted to add animations such as Navigation Animations but looked like we were on a tight deadline so couldn't do it but just a FYI!
 - I wanted to do some last minute refactoring (such as adjusting font sizes and other screen dimensions) and code cleanups but couldn't do it due to TIME CONSTRAINTS.
